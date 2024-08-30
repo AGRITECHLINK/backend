@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace</title>
+    <link href="/static/css/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans min-h-screen">
+    <nav class="bg-blue-600 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{{ url_for('dashboard') }}" class="flex-shrink-0">
+                        <span class="text-white text-lg font-semibold">AgriTech Link</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{{ url_for('dashboard') }}" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                        <a href="{{ url_for('marketplace') }}" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Marketplace</a>
+                        <a href="{{ url_for('analyze_plant') }}" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Analyze Plant</a>
+                        <a href="{{ url_for('add_product') }}" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Add Product</a>
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('logout') }}" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Logout</a>
+                        {% else %}
+                            <a href="{{ url_for('login') }}" class="text-white hover:bg-blue-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" class="bg-blue-600 inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{ url_for('dashboard') }}" class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
+                <a href="{{ url_for('marketplace') }}" class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium">Marketplace</a>
+                <a href="{{ url_for('analyze_plant') }}" class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium">Analyze Plant</a>
+                <a href="{{ url_for('add_product') }}" class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium">Add Product</a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('logout') }}" class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    
+    <script>
+        // Toggle mobile menu
+        const mobileMenuButton = document.querySelector('button[aria-controls="mobile-menu"]');
+        const mobileMenu = document.getElementById('mobile-menu');
+    
+        mobileMenuButton.addEventListener('click', () => {
+            const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+            mobileMenuButton.setAttribute('aria-expanded', !expanded);
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-semibold text-blue-600">Marketplace</h1>
+            <a href="{{ url_for('add_product') }}" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
+                Add Product
+            </a>
+        </div>
+        
+        {% if products %}
+            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for product in products %}
+                    <li class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-150 ease-in-out">
+                        <div class="p-6">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-2">{{ product.name }}</h2>
+                            <p class="text-2xl font-bold text-green-600">${{ product.price }}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-center text-gray-600 mt-8">No products available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

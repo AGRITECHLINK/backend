@@ -1,0 +1,15 @@
+{
+  "name": "agritech-link",
+  "version": "1.0.0",
+  "description": "AI powered agricultural marketplace",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "build:css": "tailwindcss build -i ./styles.css -o ./static/css/output.css"
+  },
+  "author": "Chimwemwe Masona",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.6"
+  }
+}

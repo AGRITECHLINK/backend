@@ -1,0 +1,40 @@
+<nav class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+  <a
+    href="{{ url_for('dashboard') }}"
+    class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium"
+    >Dashboard</a
+  >
+  <a
+    href="{{ url_for('marketplace') }}"
+    class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium"
+    >Marketplace</a
+  >
+  <a
+    href="{{ url_for('analyze_plant') }}"
+    class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium"
+    >Analyze Plant</a
+  >
+  <a
+    href="{{ url_for('add_product') }}"
+    class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium"
+    >Add Product</a
+  >
+  <!--<a
+  href="{{ url_for('chat') }}"
+  class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base"
+  >Aksara</a> -->
+  
+  {% if current_user.is_authenticated %}
+  <a
+    href="{{ url_for('logout') }}"
+    class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium"
+    >Logout</a
+  >
+  {% else %}
+  <a
+    href="{{ url_for('login') }}"
+    class="text-white hover:bg-blue-700 block px-3 py-2 rounded-md text-base font-medium"
+    >Login</a
+  >
+  {% endif %}
+</nav>
