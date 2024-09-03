@@ -12,9 +12,10 @@ from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 from datetime import datetime
 
 
+DATABASE_URL = "postgresql://postgres.jyuczdpzayfsdxahxjcm:AdminPass#1234@aws-0-eu-central-1.pooler.supabase.com:6543/postgres"
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'e232a2c5-dc92-4899-aaa0-681f7750c6ea'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///agritech.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['UPLOAD_FOLDER'] = 'uploads'
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
@@ -31,17 +32,19 @@ print(f"Model input shape: {model.input_shape}")
 print(f"Model output shape: {model.output_shape}")
 
 # Load aksara_v1 model
-# pipe = pipeline("text-generation", model="cropinailab/aksara_v1", use_auth_token="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", framework="tf")
-# tokenizer = AutoTokenizer.from_pretrained("cropinailab/aksara_v1")
-# chat_model = AutoModelForCausalLM.from_pretrained("cropinailab/aksara_v1")
+
+# tokenizer = AutoTokenizer.from_pretrained("cropinailab/aksara_v1", use_auth_token="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")
+# chat_model = AutoModelForCausalLM.from_pretrained("cropinailab/aksara_v1", use_auth_token="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")
+
+# pipe = pipeline("text-generation", model=chat_model, tokenizer=tokenizer, framework="tf")
 
 print("Aksara_v1 model loaded successfully")
 
 # Load class indices
-with open('class_indices_finetuned.json', 'r') as f:
-    class_indices = json.load(f)
-    class_names = list(class_indices.keys())
-    class_indices_inv = {v: k for k, v in class_indices.items()}
+# with open('class_indices_finetuned.json', 'r') as f:
+#     class_indices = json.load(f)
+#     class_names = list(class_indices.keys())
+#     class_indices_inv = {v: k for k, v in class_indices.items()}
 
 # Models
 class User(db.Model, UserMixin):
